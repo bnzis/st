@@ -212,10 +212,7 @@ static Shortcut shortcuts[] = {
 	{ AltMask,              XK_m,           zoom,           {.f = +1} },
 	{ AltMask,              XK_n,           zoom,           {.f = -1} },
 	{ TERMMOD,              XK_Home,        zoomreset,      {.f =  0} },
-	{ TERMMOD,              XK_C,           clipcopy,       {.i =  0} },
-	{ TERMMOD,              XK_V,           clippaste,      {.i =  0} },
-	{ CTRLMOD,              XK_C,           clipcopy,       {.i =  0} },
-	{ CTRLMOD,              XK_V,           clippaste,      {.i =  0} },
+	{ AltMask,              XK_w,           clipcopy,       {.i =  0} },
 	{ TERMMOD,              XK_Y,           selpaste,       {.i =  0} },
 	{ ShiftMask,            XK_Insert,      selpaste,       {.i =  0} },
 	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
@@ -501,7 +498,6 @@ static char ascii_printable[] =
 	" !\"#$%&'()*+,-./0123456789:;<=>?"
 	"@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_"
 	"`abcdefghijklmnopqrstuvwxyz{|}~";
-
 
 /// word sepearors normal mode
 /// [Vim Browse].
