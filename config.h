@@ -5,7 +5,7 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "Terminus:pixelsize=12:antialias=false:autohint=true";
+static char *font = "JetBrains Mono:pixelsize=14:autohint=true";
 static int borderpx = 2;
 
 /*
@@ -88,44 +88,56 @@ float alphaUnfocussed = 0.7; //< alpha value used when the focus is lost
 
 /* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
-	/* 8 normal colors */
-	"black",
-	"red3",
-	"green3",
-	"yellow3",
-	"blue2",
-	"magenta3",
-	"cyan3",
-	"gray90",
-
-	/* 8 bright colors */
-	"gray50",
-	"red",
-	"green",
-	"yellow",
-	"#5c5cff",
-	"magenta",
-	"cyan",
-	"white",
-
-	[255] = 0,
-
-	/* more colors can be added after 255 to use with DefaultXX */
-	"#c2c2b0",
-	"#1c1c1c",
+	/* solarized dark */
+	"#073642",  /*  0: black    */
+	"#dc322f",  /*  1: red      */
+	"#859900",  /*  2: green    */
+	"#b58900",  /*  3: yellow   */
+	"#268bd2",  /*  4: blue     */
+	"#d33682",  /*  5: magenta  */
+	"#2aa198",  /*  6: cyan     */
+	"#eee8d5",  /*  7: white    */
+	"#002b36",  /*  8: brblack  */
+	"#cb4b16",  /*  9: brred    */
+	"#586e75",  /* 10: brgreen  */
+	"#657b83",  /* 11: bryellow */
+	"#839496",  /* 12: brblue   */
+	"#6c71c4",  /* 13: brmagenta*/
+	"#93a1a1",  /* 14: brcyan   */
+	"#fdf6e3",  /* 15: brwhite  */
 };
 
+/* Terminal colors for alternate (light) palette */
+static const char *altcolorname[] = {
+   /* solarized light */
+   "#eee8d5",  /*  0: black    */
+   "#dc322f",  /*  1: red      */
+   "#859900",  /*  2: green    */
+   "#b58900",  /*  3: yellow   */
+   "#268bd2",  /*  4: blue     */
+   "#d33682",  /*  5: magenta  */
+   "#2aa198",  /*  6: cyan     */
+   "#073642",  /*  7: white    */
+   "#fdf6e3",  /*  8: brblack  */
+   "#cb4b16",  /*  9: brred    */
+   "#93a1a1",  /* 10: brgreen  */
+   "#839496",  /* 11: bryellow */
+   "#657b83",  /* 12: brblue   */
+   "#6c71c4",  /* 13: brmagenta*/
+   "#586e75",  /* 14: brcyan   */
+   "#002b36",  /* 15: brwhite  */
+};
 
 /*
  * Default colors (colorname index)
  * foreground, background, cursor, reverse cursor
  */
-unsigned int defaultfg = 256;
-unsigned int defaultbg = 257; //< n'importe quoi
-static unsigned int defaultcs = 256;
-static unsigned int defaultrcs = 257;
-unsigned int focusedbg = 257;
-unsigned int unfocusedbg = 257;
+unsigned int focusedbg = 8;
+unsigned int unfocusedbg = 8;
+unsigned int defaultfg = 12;
+unsigned int defaultbg = 8;
+static unsigned int defaultcs = 14;
+static unsigned int defaultrcs = 15;
 
 /*
  * Default shape of cursor
@@ -199,6 +211,7 @@ static char *copyoutput[] = { "/bin/sh", "-c", "st-copyout", "externalpipe", NUL
 
 static Shortcut shortcuts[] = {
 	{ AltMask,              XK_c,           normalMode,     {.i = 0}},
+	{ AltMask|ShiftMask,    XK_T,           swapcolors,     {.i =  0} },
 	// external pipe
 	{ MODKEY,               XK_u,           externalpipe,   { .v = openurlcmd } },
 	{ MODKEY,               XK_y,           externalpipe,   { .v = copyurlcmd } },
