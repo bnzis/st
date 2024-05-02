@@ -1,5 +1,6 @@
 /* See LICENSE for license details. */
-
+#ifndef ST_H
+#define ST_H
 #include "glyph.h"
 #include "normalMode.h"
 
@@ -7,39 +8,41 @@
 #include <sys/types.h>
 
 /* macros */
-#define MIN(a, b)		((a) < (b) ? (a) : (b))
-#define MAX(a, b)		((a) < (b) ? (b) : (a))
-#define LEN(a)			(sizeof(a) / sizeof(a)[0])
-#define BETWEEN(x, a, b)	((a) <= (x) && (x) <= (b))
-#define DIVCEIL(n, d)		(((n) + ((d) - 1)) / (d))
-#define DEFAULT(a, b)		(a) = (a) ? (a) : (b)
-#define INTERVAL(x, a, b)		(x) < (a) ? (a) : (x) > (b) ? (b) : (x)
-#define INTERVAL_DIFF(x, a, b)		(x) < (a) ? (x) - (a) : (x) > (b) ? (x) - (b) : 0
-#define LIMIT(x, a, b)		(x) = (x) < (a) ? (a) : (x) > (b) ? (b) : (x)
-#define ATTRCMP(a, b)		((a).mode != (b).mode || (a).fg != (b).fg || \
-				(a).bg != (b).bg)
-#define TIMEDIFF(t1, t2)	((t1.tv_sec-t2.tv_sec)*1000 + \
-				(t1.tv_nsec-t2.tv_nsec)/1E6)
-#define MODBIT(x, set, bit)	((set) ? ((x) |= (bit)) : ((x) &= ~(bit)))
+#define MIN(a, b) ((a) < (b) ? (a) : (b))
+#define MAX(a, b) ((a) < (b) ? (b) : (a))
+#define LEN(a) (sizeof(a) / sizeof(a)[0])
+#define BETWEEN(x, a, b) ((a) <= (x) && (x) <= (b))
+#define DIVCEIL(n, d) (((n) + ((d) - 1)) / (d))
+#define DEFAULT(a, b) (a) = (a) ? (a) : (b)
+#define INTERVAL(x, a, b) (x)<(a) ? (a) : (x)>(b) ? (b) : (x)
+#define INTERVAL_DIFF(x, a, b) (x)<(a) ? (x) - (a) : (x)>(b) ? (x) - (b) : 0
+#define LIMIT(x, a, b) (x) = (x) < (a) ? (a) : (x) > (b) ? (b) \
+							 : (x)
+#define ATTRCMP(a, b) (((a).mode & (~ATTR_WRAP)) != ((b).mode & (~ATTR_WRAP)) || \
+    (a).fg != (b).fg ||                                                          \
+    (a).bg != (b).bg)
+#define TIMEDIFF(t1, t2) ((t1.tv_sec - t2.tv_sec) * 1000 + \
+    (t1.tv_nsec - t2.tv_nsec) / 1E6)
+#define MODBIT(x, set, bit) ((set) ? ((x) |= (bit)) : ((x) &= ~(bit)))
 
-#define TRUECOLOR(r,g,b)	(1 << 24 | (r) << 16 | (g) << 8 | (b))
-#define IS_TRUECOL(x)		(1 << 24 & (x))
+#define TRUECOLOR(r, g, b) (1 << 24 | (r) << 16 | (g) << 8 | (b))
+#define IS_TRUECOL(x) (1 << 24 & (x))
 
 enum glyph_attribute {
-	ATTR_NULL       = 0,
-	ATTR_BOLD       = 1 << 0,
-	ATTR_FAINT      = 1 << 1,
-	ATTR_ITALIC     = 1 << 2,
-	ATTR_UNDERLINE  = 1 << 3,
-	ATTR_BLINK      = 1 << 4,
-	ATTR_REVERSE    = 1 << 5,
-	ATTR_INVISIBLE  = 1 << 6,
-	ATTR_STRUCK     = 1 << 7,
-	ATTR_WRAP       = 1 << 8,
-	ATTR_WIDE       = 1 << 9,
-	ATTR_WDUMMY     = 1 << 10,
-	ATTR_HIGHLIGHT  = 1 << 12,
-	ATTR_CURRENT    = 1 << 13,
+	ATTR_NULL = 0,
+	ATTR_BOLD = 1 << 0,
+	ATTR_FAINT = 1 << 1,
+	ATTR_ITALIC = 1 << 2,
+	ATTR_UNDERLINE = 1 << 3,
+	ATTR_BLINK = 1 << 4,
+	ATTR_REVERSE = 1 << 5,
+	ATTR_INVISIBLE = 1 << 6,
+	ATTR_STRUCK = 1 << 7,
+	ATTR_WRAP = 1 << 8,
+	ATTR_WIDE = 1 << 9,
+	ATTR_WDUMMY = 1 << 10,
+	ATTR_HIGHLIGHT = 1 << 12,
+	ATTR_CURRENT = 1 << 13,
 	ATTR_BOLD_FAINT = ATTR_BOLD | ATTR_FAINT,
 };
 
@@ -65,7 +68,6 @@ typedef union {
 	float f;
 	const void *v;
 } Arg;
-
 
 void die(const char *, ...);
 void redraw(void);
@@ -112,8 +114,6 @@ void *xmalloc(size_t);
 void *xrealloc(void *, size_t);
 char *xstrdup(char *);
 
-
-
 /* config.h globals */
 extern char *utmp;
 extern char *stty_args;
@@ -129,3 +129,5 @@ extern float alpha;
 extern float alphaUnfocussed;
 extern char wordDelimSmall[];
 extern char wordDelimLarge[];
+
+#endif
